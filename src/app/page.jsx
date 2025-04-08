@@ -1,6 +1,13 @@
 import styles from "./page.module.css";
 import Header from "../components/header";
- 
+import HeroBanner from "@/components/heroBanner";
+ import Categories from "@/components/categories";
+import SectionHeader from "@/components/sectionHeader";
+import SubscriptionSection from "@/components/subscriptionSection";
+import Footer from "@/components/footer";
+import BooksSection from "@/components/booksSection";
+
+
  export default function Home() {
    // Dados que seriam obtidos de uma API
    const featuredBooks = [
@@ -144,160 +151,23 @@ import Header from "../components/header";
        <Header cartItems= {cartItems} />
  
        {/* HERO BANNER */}
-       <section className={styles.heroBanner}>
-         <div className={styles.heroContent}>
-           <h2 className={styles.heroHeading}>
-             Descubra mundos extraordinários
-           </h2>
-           <p className={styles.heroParagraph}>
-             Promoção de lançamentos com até 30% de desconto!
-           </p>
-           <button className={styles.ctaButton}>Ver ofertas</button>
-         </div>
-       </section>
+      <HeroBanner />
  
        {/* FEATURED BOOKS SECTION */}
-       <section className={styles.bookSection}>
-         <div className={styles.sectionHeader}>
-           <h2 className={styles.sectionHeading}>Destaques da Semana</h2>
-           <a href="/destaques" className={styles.viewAll}>
-             Ver todos
-           </a>
-         </div>
- 
-         <div className={styles.booksGrid}>
-           {featuredBooks.map((book) => (
-             <div key={book.id} className={styles.bookCard}>
-               <div className={styles.bookCover}>
-                 <img
-                   src={book.coverImage}
-                   alt={book.title}
-                   className={styles.coverImage}
-                 />
-                 <button className={styles.quickViewButton}>Visualizar</button>
-               </div>
-               <div className={styles.bookInfo}>
-                 <h3 className={styles.bookTitle}>{book.title}</h3>
-                 <p className={styles.bookAuthor}>por {book.author}</p>
-                 <div className={styles.bookRating}>
-                   {renderStars(book.rating)}
-                   <span className={styles.ratingValue}>({book.rating})</span>
-                 </div>
-                 <div className={styles.bookTags}>
-                   {book.tags.map((tag, index) => (
-                     <span key={index} className={styles.tag}>
-                       {tag}
-                     </span>
-                   ))}
-                 </div>
-                 <div className={styles.bookPriceActions}>
-                   <span className={styles.bookPrice}>
-                     R$ {book.price.toFixed(2)}
-                   </span>
-                   <div className={styles.bookActions}>
-                     <button className={styles.iconButton}>❤️</button>
-                     <button className={styles.iconButton}>🛒</button>
-                   </div>
-                 </div>
-               </div>
-             </div>
-           ))}
-         </div>
-       </section>
- 
-       {/* CATEGORIES SECTION */}
-       <section className={styles.categoriesSection}>
-         <div className={styles.sectionHeader}>
-           <h2 className={styles.sectionHeading}>Categorias Populares</h2>
-           <a href="/categorias" className={styles.viewAll}>
-             Ver todas
-           </a>
-         </div>
- 
-         <div className={styles.categoriesGrid}>
-           {categories.map((category) => (
-             <a
-               key={category.id}
-               href={`/categoria/${category.id}`}
-               className={styles.categoryCard}
-             >
-               <span className={styles.categoryIcon}>{category.icon}</span>
-               <span className={styles.categoryName}>{category.name}</span>
-             </a>
-           ))}
-         </div>
-       </section>
- 
-       {/* NEW RELEASES SECTION */}
-       <section className={`${styles.bookSection} ${styles.newReleases}`}>
-         <div className={styles.sectionHeader}>
-           <h2 className={styles.sectionHeading}>Lançamentos</h2>
-           <a href="/lancamentos" className={styles.viewAll}>
-             Ver todos
-           </a>
-         </div>
- 
-         <div className={styles.booksGrid}>
-           {newReleases.map((book) => (
-             <div key={book.id} className={styles.bookCard}>
-               <div className={styles.bookCover}>
-                 <img
-                   src={book.coverImage}
-                   alt={book.title}
-                   className={styles.coverImage}
-                 />
-                 <button className={styles.quickViewButton}>Visualizar</button>
-               </div>
-               <div className={styles.bookInfo}>
-                 <span className={styles.newBadge}>Novo</span>
-                 <h3 className={styles.bookTitle}>{book.title}</h3>
-                 <p className={styles.bookAuthor}>por {book.author}</p>
-                 <div className={styles.bookRating}>
-                   {renderStars(book.rating)}
-                   <span className={styles.ratingValue}>({book.rating})</span>
-                 </div>
-                 <div className={styles.bookTags}>
-                   {book.tags.map((tag, index) => (
-                     <span key={index} className={styles.tag}>
-                       {tag}
-                     </span>
-                   ))}
-                 </div>
-                 <div className={styles.bookPriceActions}>
-                   <span className={styles.bookPrice}>
-                     R$ {book.price.toFixed(2)}
-                   </span>
-                   <div className={styles.bookActions}>
-                     <button className={styles.iconButton}>❤️</button>
-                     <button className={styles.iconButton}>🛒</button>
-                   </div>
-                 </div>
-               </div>
-             </div>
-           ))}
-         </div>
-       </section>
+        <BooksSection books= {featuredBooks} renderStars={renderStars} 
+        text={"ver todos os destaques"} 
+        title={"destaques da semana"} 
+        viewAllLink= {"/destaques"}/>
+
+        <Categories categories={categories} />
+
+        <BooksSection books={newReleases} renderStars={renderStars}
+         text={"ver todos"} 
+         title={"lançamentos"} 
+         viewAllLink= {"/lancamentos"}/>/
  
        {/* SUBSCRIPTION SECTION */}
-       <section className={styles.subscriptionSection}>
-         <div className={styles.subscriptionContent}>
-           <h2 className={styles.subscriptionHeading}>
-             Fique por dentro das novidades!
-           </h2>
-           <p className={styles.subscriptionText}>
-             Assine nossa newsletter e receba atualizações sobre novos
-             lançamentos, promoções exclusivas e dicas de leitura.
-           </p>
-           <div className={styles.subscriptionForm}>
-             <input
-               type="email"
-               className={styles.subscriptionInput}
-               placeholder="Seu melhor e-mail"
-             />
-             <button className={styles.subscribeButton}>Assinar</button>
-           </div>
-         </div>
-       </section>
+       <SubscriptionSection />
  
        {/* SHOPPING CART */}
        <div className={styles.shoppingCart}>
@@ -343,138 +213,8 @@ import Header from "../components/header";
        </div>
  
        {/* FOOTER */}
-       <footer className={styles.footer}>
-         <div className={styles.footerContent}>
-           <div className={styles.footerColumn}>
-             <div className={styles.footerLogo}>
-               <h2 className={styles.footerLogoTitle}>
-                 <span className={styles.bookIcon}>📚</span>
-                 BookVerse
-               </h2>
-               <p className={styles.footerLogoSlogan}>
-                 Onde histórias ganham vida
-               </p>
-             </div>
-             <p className={styles.footerDescription}>
-               A BookVerse é uma livraria online que conecta leitores ávidos com
-               os melhores e mais diversos livros do mercado.
-             </p>
-           </div>
- 
-           <div className={styles.footerColumn}>
-             <h3 className={styles.footerColumnHeading}>Links Rápidos</h3>
-             <ul className={styles.footerLinks}>
-               <li className={styles.footerLinkItem}>
-                 <a href="/" className={styles.footerLink}>
-                   Home
-                 </a>
-               </li>
-               <li className={styles.footerLinkItem}>
-                 <a href="/livros" className={styles.footerLink}>
-                   Catálogo
-                 </a>
-               </li>
-               <li className={styles.footerLinkItem}>
-                 <a href="/ofertas" className={styles.footerLink}>
-                   Ofertas
-                 </a>
-               </li>
-               <li className={styles.footerLinkItem}>
-                 <a href="/sobre" className={styles.footerLink}>
-                   Sobre Nós
-                 </a>
-               </li>
-               <li className={styles.footerLinkItem}>
-                 <a href="/contato" className={styles.footerLink}>
-                   Contato
-                 </a>
-               </li>
-             </ul>
-           </div>
- 
-           <div className={styles.footerColumn}>
-             <h3 className={styles.footerColumnHeading}>Categorias</h3>
-             <ul className={styles.footerLinks}>
-               <li className={styles.footerLinkItem}>
-                 <a
-                   href="/categoria/ficcao-cientifica"
-                   className={styles.footerLink}
-                 >
-                   Ficção Científica
-                 </a>
-               </li>
-               <li className={styles.footerLinkItem}>
-                 <a href="/categoria/romance" className={styles.footerLink}>
-                   Romance
-                 </a>
-               </li>
-               <li className={styles.footerLinkItem}>
-                 <a href="/categoria/tecnologia" className={styles.footerLink}>
-                   Tecnologia
-                 </a>
-               </li>
-               <li className={styles.footerLinkItem}>
-                 <a href="/categoria/fantasia" className={styles.footerLink}>
-                   Fantasia
-                 </a>
-               </li>
-               <li className={styles.footerLinkItem}>
-                 <a href="/categoria/historia" className={styles.footerLink}>
-                   História
-                 </a>
-               </li>
-             </ul>
-           </div>
- 
-           <div className={styles.footerColumn}>
-             <h3 className={styles.footerColumnHeading}>Redes Sociais</h3>
-             <div className={styles.socialLinks}>
-               <a
-                 href="https://instagram.com/bookverse"
-                 className={styles.socialLink}
-               >
-                 📸 Instagram
-               </a>
-               <a
-                 href="https://tiktok.com/@bookverse"
-                 className={styles.socialLink}
-               >
-                 🎵 TikTok
-               </a>
-               <a
-                 href="https://twitter.com/bookverse"
-                 className={styles.socialLink}
-               >
-                 🐦 Twitter
-               </a>
-               <a
-                 href="https://youtube.com/bookverse"
-                 className={styles.socialLink}
-               >
-                 🎬 YouTube
-               </a>
-             </div>
-           </div>
-         </div>
- 
-         <div className={styles.footerBottom}>
-           <p className={styles.copyright}>
-             © 2023 BookVerse. Todos os direitos reservados.
-           </p>
-           <div className={styles.footerPolicies}>
-             <a href="/privacidade" className={styles.policyLink}>
-               Política de Privacidade
-             </a>
-             <a href="/termos" className={styles.policyLink}>
-               Termos de Uso
-             </a>
-             <a href="/cookies" className={styles.policyLink}>
-               Política de Cookies
-             </a>
-           </div>
-         </div>
-       </footer>
- 
+      
+         <Footer />
        {/* OVERLAY */}
        <div className={styles.overlay}></div>
  
